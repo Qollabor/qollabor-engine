@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2014 - 2019 Cafienne B.V.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -24,11 +24,11 @@ public class DeleteCaseFileItem extends CaseFileItemCommand {
     /**
      * Deletes the case file item.
      *
-     * @param caseInstanceId   The id of the case in which to perform this command.
-     * @param path Path to the case file item to be created
+     * @param caseInstanceId The id of the case in which to perform this command.
+     * @param path           Path to the case file item to be created
      */
     public DeleteCaseFileItem(TenantUser tenantUser, String caseInstanceId, Path path) {
-        super(tenantUser, caseInstanceId, Value.NULL, path, CaseFileItemTransition.Delete);
+        super(tenantUser, caseInstanceId, path, Value.NULL, CaseFileItemTransition.Delete);
     }
 
     public DeleteCaseFileItem(ValueMap json) {

@@ -74,7 +74,7 @@ public class TestGetListGetDetails {
         // So GetList goes to Failed state & GetDetails remains in Available state
         ValueMap requestObject = new ValueMap();
         requestObject.putRaw("port", PORT_NUMBER);
-        CreateCaseFileItem createChild = new CreateCaseFileItem(user, caseInstanceId, requestObject.cloneValueNode(), new Path("HTTP-Configuration"));
+        CreateCaseFileItem createChild = new CreateCaseFileItem(user, caseInstanceId, new Path("HTTP-Configuration"), requestObject.cloneValueNode());
         testCase.addStep(createChild, casePlan -> {
             casePlan.print();
 

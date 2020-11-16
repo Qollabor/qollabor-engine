@@ -34,11 +34,11 @@ abstract class CaseFileItemCommand extends CaseCommand {
      * Determine path and content for the CaseFileItem to be touched.
      *
      * @param caseInstanceId     The id of the case in which to perform this command.
+     * @param path               Path to the case file item to be created
      * @param newContent         A value structure with contents of the new case file item
-     * @param path   Path to the case file item to be created
      * @param intendedTransition
      */
-    protected CaseFileItemCommand(TenantUser tenantUser, String caseInstanceId, Value<?> newContent, Path path, CaseFileItemTransition intendedTransition) {
+    protected CaseFileItemCommand(TenantUser tenantUser, String caseInstanceId, Path path, Value<?> newContent, CaseFileItemTransition intendedTransition) {
         super(tenantUser, caseInstanceId);
         this.path = path;
         this.content = newContent;
