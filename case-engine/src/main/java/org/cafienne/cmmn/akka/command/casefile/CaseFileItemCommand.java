@@ -15,6 +15,7 @@ import org.cafienne.akka.actor.serialization.json.ValueMap;
 import org.cafienne.cmmn.akka.command.CaseCommand;
 import org.cafienne.cmmn.akka.command.response.CaseResponse;
 import org.cafienne.cmmn.instance.Case;
+import org.cafienne.cmmn.instance.casefile.CaseFile;
 import org.cafienne.cmmn.instance.casefile.CaseFileItemCollection;
 import org.cafienne.cmmn.instance.casefile.CaseFileItemTransition;
 import org.cafienne.cmmn.instance.casefile.Path;
@@ -24,7 +25,7 @@ import java.io.IOException;
 /**
  * Holds some generic validation and processing behavior for CaseFile operations.
  */
-abstract class CaseFileItemCommand extends CaseCommand {
+abstract public class CaseFileItemCommand extends CaseFileCommand {
     protected Path path;
     protected final Value<?> content;
     protected final CaseFileItemTransition intendedTransition;
@@ -63,12 +64,12 @@ abstract class CaseFileItemCommand extends CaseCommand {
     }
 
     @Override
-    public CaseResponse process(Case caseInstance) {
+    protected CaseResponse apply(Case caseInstance, CaseFile caseFile) {
         apply(caseInstance, caseFileItem, content);
         return new CaseResponse(this);
     }
 
-    abstract void apply(Case caseInstance, CaseFileItemCollection<?> caseFileItem, Value<?> content);
+    abstract protected void apply(Case caseInstance, CaseFileItemCollection<?> caseFileItem, Value<?> content);
 
     @Override
     public String toString() {

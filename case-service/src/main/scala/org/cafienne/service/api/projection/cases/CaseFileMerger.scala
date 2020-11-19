@@ -8,14 +8,14 @@ import org.cafienne.cmmn.instance.casefile.{CaseFileItemTransition, Path}
 object CaseFileMerger extends LazyLogging {
 
   def merge(event: CaseFileEvent, currentCaseFile: ValueMap): Unit = {
-    val path: Path = event.getPath
+    val path: Path = event.path
     if (path.isArrayElement) {
       val parentValue = path.getParent.resolve(currentCaseFile).asInstanceOf[ValueMap]
       val arrayValue = parentValue.withArray(path.getName)
       val itemIndex = path.index
       val itemValue = event.getValue
       event.getTransition match { // Matching on transition instead of event class, because classes only introduced in 1.1.9
-        case CaseFileItemTransition.Delete => arrayValue.getValue.remove(event.getIndex)
+        case CaseFileItemTransition.Delete => arrayValue.getValue.remove(event.path.index)
         case CaseFileItemTransition.Replace => arrayValue.set(itemIndex, itemValue)
         case CaseFileItemTransition.Update => arrayValue.set(itemIndex, itemValue)
         case CaseFileItemTransition.Create => arrayValue.size > itemIndex match {

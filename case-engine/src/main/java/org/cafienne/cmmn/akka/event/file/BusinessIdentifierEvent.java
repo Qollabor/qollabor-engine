@@ -16,21 +16,18 @@ import java.io.IOException;
 /**
  * Basic event allowing listeners that are interested only in case team member events to do initial filtering.
  */
-public abstract class BusinessIdentifierEvent extends CaseEvent {
-    public final Path path;
+public abstract class BusinessIdentifierEvent extends CaseFileBaseEvent {
     public final String name;
     public final String type;
 
     protected BusinessIdentifierEvent(CaseFileItem caseFileItem, PropertyDefinition property) {
-        super(caseFileItem.getCaseInstance());
-        this.path = caseFileItem.getPath();
+        super(caseFileItem);
         this.name = property.getName();
         this.type = property.getPropertyType().toString();
     }
 
     protected BusinessIdentifierEvent(ValueMap json) {
         super(json);
-        this.path = readPath(json, Fields.path);
         this.name = readField(json, Fields.name);
         this.type = readField(json, Fields.type);
     }
@@ -57,7 +54,6 @@ public abstract class BusinessIdentifierEvent extends CaseEvent {
     @Override
     public void write(JsonGenerator generator) throws IOException {
         super.writeCaseInstanceEvent(generator);
-        writeField(generator, Fields.path, path);
         writeField(generator, Fields.name, name);
         writeField(generator, Fields.type, type);
     }

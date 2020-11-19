@@ -40,7 +40,7 @@ public class CreateCaseFileItem extends CaseFileItemCommand {
     }
 
     @Override
-    void apply(Case caseInstance, CaseFileItemCollection<?> caseFileItem, Value<?> content) {
+    protected void apply(Case caseInstance, CaseFileItemCollection<?> caseFileItem, Value<?> content) {
         caseFileItem.createContent(content);
     }
 }

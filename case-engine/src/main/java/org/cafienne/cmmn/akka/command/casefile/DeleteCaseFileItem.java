@@ -36,7 +36,7 @@ public class DeleteCaseFileItem extends CaseFileItemCommand {
     }
 
     @Override
-    void apply(Case caseInstance, CaseFileItemCollection<?> caseFileItem, Value<?> content) {
+    protected void apply(Case caseInstance, CaseFileItemCollection<?> caseFileItem, Value<?> content) {
         caseFileItem.deleteContent();
     }
 }

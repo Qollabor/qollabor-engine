@@ -477,7 +477,7 @@ public abstract class ModelActor<C extends ModelCommand, E extends ModelEvent> e
                 if (e instanceof PlanItemEvent) {
                     msg.append(e.toString());
                 } else if (e instanceof CaseFileEvent) {
-                    msg.append(e.getClass().getSimpleName() + "." + ((CaseFileEvent) e).getTransition() + "()[" + ((CaseFileEvent) e).getPath() + "]");
+                    msg.append(e.getClass().getSimpleName() + "." + ((CaseFileEvent) e).getTransition() + "()[" + ((CaseFileEvent) e).path + "]");
                 } else {
                     msg.append(e.getClass().getSimpleName() + ", ");
                 }
