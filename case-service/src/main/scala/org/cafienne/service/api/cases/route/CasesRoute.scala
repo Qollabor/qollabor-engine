@@ -105,6 +105,12 @@ trait CasesRoute extends CommandRoute with QueryRoute {
     }
   }
 
+  def validateUserAndCase(caseInstanceId: String, subRoute: (PlatformUser, TenantUser) => Route): Route = {
+    validUser {
+      platformUser => validateCaseAccess(platformUser, caseInstanceId, tenantUser => subRoute(platformUser, tenantUser))
+    }
+  }
+
   /**
     * Simple trait (functional interface) to create a case command given a tenant user
     */

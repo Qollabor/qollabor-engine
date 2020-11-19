@@ -5,6 +5,9 @@ import org.cafienne.cmmn.akka.command.casefile.CreateCaseFileItem;
 import org.cafienne.cmmn.akka.command.casefile.DeleteCaseFileItem;
 import org.cafienne.cmmn.akka.command.casefile.ReplaceCaseFileItem;
 import org.cafienne.cmmn.akka.command.casefile.UpdateCaseFileItem;
+import org.cafienne.cmmn.akka.command.casefile.document.AddDocumentInformation;
+import org.cafienne.cmmn.akka.command.casefile.document.GetDownloadInformation;
+import org.cafienne.cmmn.akka.command.casefile.document.GetUploadInformation;
 import org.cafienne.cmmn.akka.command.debug.SwitchDebugMode;
 import org.cafienne.cmmn.akka.command.task.CompleteTask;
 import org.cafienne.cmmn.akka.command.task.FailTask;
@@ -24,10 +27,6 @@ import org.cafienne.timerservice.akka.command.response.TimerServiceResponse;
 public class CommandSerializer extends CafienneSerializer {
     static void register() {
         addCaseCommands();
-        addCasePlanCommands();
-        addCaseFileCommands();
-        addCaseTeamCommands();
-        addHumanTaskCommands();
         addProcessActorCommands();
         addTenantCommands();
         addPlatformCommands();
@@ -36,6 +35,10 @@ public class CommandSerializer extends CafienneSerializer {
 
     private static void addCaseCommands() {
         addManifestWrapper(StartCase.class, StartCase::new);
+        addCasePlanCommands();
+        addCaseFileCommands();
+        addCaseTeamCommands();
+        addHumanTaskCommands();
         addManifestWrapper(SwitchDebugMode.class, SwitchDebugMode::new);
     }
 
@@ -53,6 +56,9 @@ public class CommandSerializer extends CafienneSerializer {
         addManifestWrapper(DeleteCaseFileItem.class, DeleteCaseFileItem::new);
         addManifestWrapper(ReplaceCaseFileItem.class, ReplaceCaseFileItem::new);
         addManifestWrapper(UpdateCaseFileItem.class, UpdateCaseFileItem::new);
+        addManifestWrapper(AddDocumentInformation.class, AddDocumentInformation::new);
+        addManifestWrapper(GetUploadInformation.class, GetUploadInformation::new);
+        addManifestWrapper(GetDownloadInformation.class, GetDownloadInformation::new);
     }
 
     private static void addCaseTeamCommands() {

@@ -5,4 +5,8 @@ package org.cafienne.cmmn.definition.casefile.definitiontype;
  *
  */
 public class CMISDocumentType extends JSONType {
+    @Override
+    public boolean isDocument() {
+        return true;
+    }
 }

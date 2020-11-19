@@ -82,17 +82,9 @@ public class CaseFileEvent extends CaseFileBaseEvent implements StandardEvent<Ca
         return value;
     }
 
-    private transient CaseFileItem caseFileItem;
-
     @Override
-    public void updateState(Case caseInstance) {
-        try {
-            // Resolve the path on the case file
-            caseFileItem = path.resolve(caseInstance);
-            caseFileItem.updateState(this);
-        } catch (InvalidPathException shouldNotHappen) {
-            logger.error("Could not recover path on case instance?!", shouldNotHappen);
-        }
+    protected void updateState(CaseFileItem item) {
+        item.updateState(this);
     }
 
     @Override

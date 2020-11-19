@@ -3,10 +3,10 @@ package org.cafienne.akka.actor.serialization;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import org.cafienne.cmmn.definition.CMMNElementDefinition;
 import org.cafienne.akka.actor.serialization.json.Value;
 import org.cafienne.akka.actor.serialization.json.ValueList;
 import org.cafienne.akka.actor.serialization.json.ValueMap;
+import org.cafienne.cmmn.definition.CMMNElementDefinition;
 import org.cafienne.cmmn.instance.casefile.Path;
 import org.cafienne.infrastructure.json.CafienneJson;
 import org.slf4j.Logger;
@@ -15,9 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public interface CafienneSerializable {
     Logger logger = LoggerFactory.getLogger(CafienneSerializer.class);
@@ -56,13 +54,25 @@ public interface CafienneSerializable {
 
     void write(JsonGenerator generator) throws IOException ;
 
-    default void writeListField(JsonGenerator generator, Fields fieldName, Collection<? extends CafienneJson> stringList) throws IOException {
+    default <T extends CafienneJson> void writeListField(JsonGenerator generator, Fields fieldName, Collection<T> list) throws IOException {
         generator.writeArrayFieldStart(fieldName.toString());
-        for (CafienneJson string : stringList) {
-            if (string == null) {
+        for (T object : list) {
+            if (object == null) {
                 generator.writeNull();
             } else {
-                string.toValue().print(generator);
+                object.toValue().print(generator);
+            }
+        }
+        generator.writeEndArray();
+    }
+
+    default <C extends CafienneSerializable> void writeCollection(JsonGenerator generator, Fields fieldName, Collection<C> list) throws IOException {
+        generator.writeArrayFieldStart(fieldName.toString());
+        for (C object : list) {
+            if (object == null) {
+                generator.writeNull();
+            } else {
+                object.write(generator);
             }
         }
         generator.writeEndArray();
@@ -165,5 +175,23 @@ public interface CafienneSerializable {
 
     default Path readPath(ValueMap json, Fields fieldName) {
         return new Path((String) json.raw(fieldName));
+    }
+
+    default <T extends CafienneSerializable> List<T> readCollection(ValueMap json, Fields fieldName, CafienneDeserializer<T> deserializer) {
+        List<T> list = new ArrayList();
+        json.withArray(fieldName).forEach(value -> list.add(parseJsonInto(value, deserializer)));
+        return list;
+    }
+
+    default <T extends CafienneSerializable> T readField(ValueMap json, Fields fieldName, CafienneDeserializer<T> deserializer) {
+        return parseJsonInto(json.get(fieldName.toString()), deserializer);
+    }
+
+    private static <T extends CafienneSerializable> T parseJsonInto(Value v, CafienneDeserializer<T> deserializer) {
+        if (v == Value.NULL) {
+            return null;
+        } else {
+            return deserializer.deserialize(v);
+        }
     }
 }

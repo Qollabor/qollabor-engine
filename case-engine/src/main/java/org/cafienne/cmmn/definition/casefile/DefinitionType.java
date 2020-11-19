@@ -44,4 +44,8 @@ public class DefinitionType {
      */
     public void validate(CaseFileItemDefinition item, Value value, boolean onlyProperties) throws CaseFileError {
     }
+
+    public boolean isDocument() {
+        return false;
+    }
 }

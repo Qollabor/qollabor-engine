@@ -105,7 +105,7 @@ public class TestTaskOutputValidation {
              */
             testCase.addStep(new ValidateTaskOutput(pete, caseInstanceId, taskId, taskOutputInvalidDecision.cloneValueNode()), action -> {
                 HumanTaskAssertion taskAssertion = new HumanTaskAssertion(action);
-                Object object = taskAssertion.getValidationResponse().value();
+                Object object = taskAssertion.getValidationResponse().getResponse();
                 if (!(object instanceof ValueMap)) {
                     throw new AssertionError("Expecting a ValueMap response from Task Validation, but received something of type " + object.getClass().getName());
                 }
@@ -127,7 +127,7 @@ public class TestTaskOutputValidation {
              */
             testCase.addStep(new ValidateTaskOutput(pete, caseInstanceId, taskId, taskOutputDecisionCanceled.cloneValueNode()), action -> {
                 HumanTaskAssertion taskAssertion = new HumanTaskAssertion(action);
-                Object object = taskAssertion.getValidationResponse().value();
+                Object object = taskAssertion.getValidationResponse().getResponse();
                 if (!(object instanceof ValueMap)) {
                     throw new AssertionError("Expecting a ValueMap response from Task Validation, but received something of type " + object.getClass().getName());
                 }

@@ -7,20 +7,12 @@
  */
 package org.cafienne.cmmn.akka.command.casefile;
 
-import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.akka.actor.identity.TenantUser;
-import org.cafienne.akka.actor.serialization.Fields;
-import org.cafienne.akka.actor.serialization.json.Value;
 import org.cafienne.akka.actor.serialization.json.ValueMap;
 import org.cafienne.cmmn.akka.command.CaseCommand;
 import org.cafienne.cmmn.akka.command.response.CaseResponse;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.casefile.CaseFile;
-import org.cafienne.cmmn.instance.casefile.CaseFileItemCollection;
-import org.cafienne.cmmn.instance.casefile.CaseFileItemTransition;
-import org.cafienne.cmmn.instance.casefile.Path;
-
-import java.io.IOException;
 
 /**
  * Holds some generic validation and processing behavior for CaseFile operations.
@@ -47,13 +39,8 @@ abstract public class CaseFileCommand extends CaseCommand {
 
     @Override
     public CaseResponse process(Case caseInstance) {
-        return apply(caseInstance, caseInstance.getCaseFile());
+        return apply(caseInstance.getCaseFile());
     }
 
-    abstract protected CaseResponse apply(Case caseInstance, CaseFile caseFile);
-
-    @Override
-    public void write(JsonGenerator generator) throws IOException {
-        super.write(generator);
-    }
+    abstract protected CaseResponse apply(CaseFile caseFile);
 }

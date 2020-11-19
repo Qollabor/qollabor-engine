@@ -12,7 +12,6 @@ import org.cafienne.akka.actor.identity.TenantUser;
 import org.cafienne.akka.actor.serialization.Fields;
 import org.cafienne.akka.actor.serialization.json.Value;
 import org.cafienne.akka.actor.serialization.json.ValueMap;
-import org.cafienne.cmmn.akka.command.CaseCommand;
 import org.cafienne.cmmn.akka.command.response.CaseResponse;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.casefile.CaseFile;
@@ -59,17 +58,21 @@ abstract public class CaseFileItemCommand extends CaseFileCommand {
         super.validate(caseInstance);
         // Resolve the path on the case file, this validates whether the path matches the case file definition
         caseFileItem = path.resolve(caseInstance);
+        validate(caseFileItem);
+    }
+
+    protected void validate(CaseFileItemCollection<?> item) {
         // Validate current item state against intended operation
-        caseFileItem.validateTransition(intendedTransition, content);
+        item.validateTransition(intendedTransition, content);
     }
 
     @Override
-    protected CaseResponse apply(Case caseInstance, CaseFile caseFile) {
-        apply(caseInstance, caseFileItem, content);
+    protected CaseResponse apply(CaseFile caseFile) {
+        apply(caseFileItem, content);
         return new CaseResponse(this);
     }
 
-    abstract protected void apply(Case caseInstance, CaseFileItemCollection<?> caseFileItem, Value<?> content);
+    abstract protected void apply(CaseFileItemCollection<?> caseFileItem, Value<?> content);
 
     @Override
     public String toString() {

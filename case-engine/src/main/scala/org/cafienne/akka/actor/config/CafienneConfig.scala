@@ -54,6 +54,11 @@ class CafienneConfig(val systemConfig: Config) extends CafienneBaseConfig {
   lazy val repository: RepositoryConfig = new RepositoryConfig(this)
 
   /**
+    * Returns configuration options for uploading and downloading case file documents
+    */
+  lazy val documentStorage: DocumentStorageConfig = new DocumentStorageConfig(this)
+
+  /**
     * Returns true of the debug route is open (for developers using IDE to do debugging)
     */
   val developerRouteOpen = {

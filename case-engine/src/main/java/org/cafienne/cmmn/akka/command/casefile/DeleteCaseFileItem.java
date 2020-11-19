@@ -11,7 +11,6 @@ import org.cafienne.akka.actor.identity.TenantUser;
 import org.cafienne.akka.actor.serialization.Manifest;
 import org.cafienne.akka.actor.serialization.json.Value;
 import org.cafienne.akka.actor.serialization.json.ValueMap;
-import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.casefile.CaseFileItemCollection;
 import org.cafienne.cmmn.instance.casefile.CaseFileItemTransition;
 import org.cafienne.cmmn.instance.casefile.Path;
@@ -36,7 +35,7 @@ public class DeleteCaseFileItem extends CaseFileItemCommand {
     }
 
     @Override
-    protected void apply(Case caseInstance, CaseFileItemCollection<?> caseFileItem, Value<?> content) {
+    protected void apply(CaseFileItemCollection<?> caseFileItem, Value<?> content) {
         caseFileItem.deleteContent();
     }
 }

@@ -46,6 +46,21 @@ public abstract class CaseFileBaseEvent extends CaseEvent {
         return getDescription();
     }
 
+    protected transient CaseFileItem caseFileItem;
+
+    @Override
+    public void updateState(Case caseInstance) {
+        try {
+            // Resolve the path on the case file
+            caseFileItem = path.resolve(caseInstance);
+            updateState(caseFileItem);
+        } catch (InvalidPathException shouldNotHappen) {
+            logger.error("Could not recover path on case instance?!", shouldNotHappen);
+        }
+    }
+
+    abstract protected void updateState(CaseFileItem item);
+
     @Override
     public String getDescription() {
         return this.getClass().getSimpleName() + "['" + path + "']";

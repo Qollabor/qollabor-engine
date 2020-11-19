@@ -33,15 +33,8 @@ public abstract class BusinessIdentifierEvent extends CaseFileBaseEvent {
     }
 
     @Override
-    public void updateState(Case caseInstance) {
-        try {
-            // Resolve the path on the case file
-            // Have to recover it this way in order to overcome fact that Path.definition is not serializable
-            CaseFileItem item = path.resolve(caseInstance);
-            item.updateState(this);
-        } catch (InvalidPathException shouldNotHappen) {
-            logger.error("Could not recover path on case instance?!", shouldNotHappen);
-        }
+    protected void updateState(CaseFileItem item) {
+        item.updateState(this);
     }
 
     public abstract Value getValue();
@@ -53,7 +46,7 @@ public abstract class BusinessIdentifierEvent extends CaseFileBaseEvent {
 
     @Override
     public void write(JsonGenerator generator) throws IOException {
-        super.writeCaseInstanceEvent(generator);
+        super.writeCaseFileEvent(generator);
         writeField(generator, Fields.name, name);
         writeField(generator, Fields.type, type);
     }
