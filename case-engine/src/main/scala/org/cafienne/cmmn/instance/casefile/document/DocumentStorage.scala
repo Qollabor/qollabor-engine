@@ -13,5 +13,5 @@ trait DocumentStorage {
 
   def download(user: TenantUser, caseInstanceId: String, path: Path): Route
 
-  def removeUpload(user: TenantUser, caseInstanceId: String, path: Path): Future[StorageResult]
+  def removeUploads(user: TenantUser, caseInstanceId: String, path: Path, identifiers: Seq[DocumentIdentifier]): Unit
 }

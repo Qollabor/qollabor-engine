@@ -3,7 +3,7 @@ package org.cafienne.cmmn.instance.casefile.document
 import java.io.File
 
 import akka.http.scaladsl.model.Multipart.FormData
-import akka.http.scaladsl.server.Directives.{getFromFile, onComplete}
+import akka.http.scaladsl.server.Directives.getFromFile
 import akka.http.scaladsl.server.Route
 import akka.stream.scaladsl.FileIO
 import com.typesafe.scalalogging.LazyLogging
@@ -42,31 +42,61 @@ class FileBasedDocumentStorage extends DocumentStorage with LazyLogging {
       "new_name.txt"
     })
 
-    val file: File = new File(getDirectory(caseInstanceId, path, true), newFileName)
+    val file: File = new File(getPathDirectory(caseInstanceId, path, true), newFileName)
     bodyPart.entity.dataBytes.runWith(FileIO.toPath(file.toPath)).map(_ => bodyPart.name -> file).map(result => {
       logger.info("Uploaded " + file.getAbsolutePath)
       DocumentIdentifier(newFileName)
     })
   }
 
-  private def getDirectory(caseInstanceId: String, path: Path, createIfNotExists: Boolean = false): File = {
-    val caseInstancePath: File = new File(storageDirectory, caseInstanceId)
-    if (createIfNotExists && !caseInstancePath.exists()) {
-      caseInstancePath.mkdir()
-    }
-    val caseFileItemPath = new File(caseInstancePath, path.toString)
+  private def getPathDirectory(caseInstanceId: String, path: Path, createIfNotExists: Boolean = false): File = {
+    val caseInstanceDirectory: File = getCaseDirectory(caseInstanceId, createIfNotExists)
+    val caseFileItemPath = new File(caseInstanceDirectory, path.toString)
     if (createIfNotExists && !caseFileItemPath.exists()) {
       caseFileItemPath.mkdirs()
     }
     caseFileItemPath
   }
 
+  private def getCaseDirectory(caseInstanceId: String, createIfNotExists: Boolean = false): File = {
+    val caseInstancePath: File = new File(storageDirectory, caseInstanceId)
+    if (createIfNotExists && !caseInstancePath.exists()) {
+      caseInstancePath.mkdir()
+    }
+    caseInstancePath
+  }
+
   override def download(user: TenantUser, caseInstanceId: String, path: Path): Route = {
-    val directory = getDirectory(caseInstanceId, path)
+    val directory = getPathDirectory(caseInstanceId, path)
     getFromFile(directory)
   }
 
-  override def removeUpload(user: TenantUser, caseInstanceId: String, path: Path): Future[StorageResult] = {
-    ???
+  override def removeUploads(user: TenantUser, caseInstanceId: String, path: Path, identifiers: Seq[DocumentIdentifier]): Unit = {
+    val directory: File = getPathDirectory(caseInstanceId, path)
+    logger.info(s"Removing upload $identifiers from directory $directory")
+    if (directory.exists()) {
+      identifiers.map(i => i.identifier).foreach(filename => {
+        logger.info(s"  Deleting $filename from directory ${directory.getAbsolutePath}")
+        new File(directory, filename).delete()
+      })
+      directoryCleaner(directory, getCaseDirectory(caseInstanceId))
+    } else {
+      logger.warn(s"Trying to remove uploads $identifiers, but directory $directory does not exist")
+    }
+  }
+
+  private def directoryCleaner(directory: File, caseDirectory: File): Unit = {
+    if (directory.list().isEmpty) {
+      logger.debug("Cleaning empty directory " + directory)
+      directory.delete()
+      if (directory == caseDirectory) {
+        // Done
+        logger.debug("Also cleaned case directory")
+      } else {
+        directoryCleaner(directory.getParentFile, caseDirectory)
+      }
+    } else {
+      logger.debug(s"Directory $directory has ${directory.list.size} files left; will not be cleared further")
+    }
   }
 }

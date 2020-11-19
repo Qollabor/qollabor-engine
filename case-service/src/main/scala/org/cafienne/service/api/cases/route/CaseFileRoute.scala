@@ -20,18 +20,21 @@ import io.swagger.v3.oas.annotations.{Operation, Parameter}
 import javax.ws.rs._
 import org.cafienne.akka.actor.CaseSystem
 import org.cafienne.akka.actor.command.exception.InvalidCommandException
+import org.cafienne.akka.actor.command.response.{CommandFailure, ModelResponse, SecurityFailure}
 import org.cafienne.akka.actor.identity.PlatformUser
 import org.cafienne.akka.actor.serialization.json.{JSONReader, Value, ValueList}
 import org.cafienne.cmmn.akka.command.casefile.document.{AddDocumentInformation, GetDownloadInformation, GetUploadInformation}
 import org.cafienne.cmmn.akka.command.casefile.{CreateCaseFileItem, DeleteCaseFileItem, ReplaceCaseFileItem, UpdateCaseFileItem}
+import org.cafienne.cmmn.akka.command.response.CaseResponse
 import org.cafienne.cmmn.instance.casefile.document.StorageResult
 import org.cafienne.identity.IdentityProvider
 import org.cafienne.infrastructure.akka.http.ValueMarshallers._
-import org.cafienne.service.api
+import org.cafienne.service.{Main, api}
 import org.cafienne.service.api.projection.query.CaseQueries
 
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
+import scala.util.{Failure, Success}
 
 @SecurityRequirement(name = "openId", scopes = Array("openid"))
 @Path("/cases")
@@ -233,12 +236,50 @@ class CaseFileRoute(val caseQueries: CaseQueries)(override implicit val userCach
                 case b: BodyPart => throw new InvalidCommandException("Cannot upload document - encountered unknown form element " + b.name)
               }.runFold(Map.empty[String, Any])((map, tuple) => map + tuple)
 
-              // when processing have finished create a response for the user
+              // After all documents have been uploaded to the DocumentStorage, we need to inform the case instance on the result
+              //  The case may or may not accept the uploads; if not, then we'll instruct the DocumentStorage to remove the documents
               onSuccess(allPartsF) { allParts =>
                 val storageResults: Seq[StorageResult] = allParts.filter(part => part._2.isInstanceOf[StorageResult]).map(_._2.asInstanceOf[StorageResult]).toSeq
                 val list: ValueList = new ValueList()
                 allParts.filter(part => part._2.isInstanceOf[Value[_]]).map(_._2.asInstanceOf[Value[_]]).foreach(v => list.add(v))
-                askCase(platformUser, caseInstanceId, tenantUser => new AddDocumentInformation(tenantUser, caseInstanceId, path, list, storageResults.toArray))
+
+                import akka.pattern.ask
+                implicit val timeout = Main.caseSystemTimeout
+
+                val command = new AddDocumentInformation(tenantUser, caseInstanceId, path, list, storageResults.toArray)
+                onComplete(CaseSystem.router ? command) {
+                  case Failure(exception) => {
+                    logger.info(s"Encountered an unexpected exception of type " + exception.getClass.getName +", removing uploaded documents")
+                    logger.whenDebugEnabled(() => {
+                      logger.debug("Exception: ", exception)
+                    })
+                    storage.removeUploads(tenantUser, caseInstanceId, path, storageResults.map(r => r.identifier))
+                    complete(StatusCodes.InternalServerError, exception.getMessage)
+                  }
+                  case Success(response) => {
+                    response match {
+                      case s: SecurityFailure => {
+                        storage.removeUploads(tenantUser, caseInstanceId, path, storageResults.map(r => r.identifier))
+                        complete(StatusCodes.Unauthorized, s.exception.getMessage)
+                      }
+                      case e: CommandFailure => {
+                        storage.removeUploads(tenantUser, caseInstanceId, path, storageResults.map(r => r.identifier))
+                        complete(StatusCodes.BadRequest, e.exception.getMessage)
+                      }
+                      case value: CaseResponse => {
+                        import org.cafienne.infrastructure.akka.http.ResponseMarshallers._
+                        writeLastModifiedHeader(value) {
+                          complete(StatusCodes.OK, value)
+                        }
+                      }
+                      case other => {
+                        logger.info(s"Uploading documents resulted in an unknown response of type ${other.getClass.getName}; instructing storage to clear documents")
+                        storage.removeUploads(tenantUser, caseInstanceId, path, storageResults.map(r => r.identifier))
+                        complete(StatusCodes.InternalServerError)
+                      }
+                    }
+                  }
+                }
               }
             }
           }
