@@ -121,16 +121,6 @@ public class ExpressionEvaluator implements CMMNExpressionEvaluator {
     }
 
     @Override
-    public Duration evaluateTimerExpression(TimerEvent timerEvent, TimerEventDefinition definition) {
-        // No further context usage right now, just plain string evaluation.
-        try {
-            return Duration.parse(definition.getTimerExpression().getBody().trim());
-        } catch (DateTimeParseException dtpe) {
-            throw new InvalidExpressionException("The timer expression " + definition.getTimerExpression().getBody() + " in " + definition.getName() + " cannot be parsed into a Duration", dtpe);
-        }
-    }
-
-    @Override
     public Value<?> evaluateInputParameterTransformation(Case caseInstance, Parameter<InputParameterDefinition> from, ParameterDefinition to, Task<?> task) {
         // TODO Auto-generated method stub
         return new BooleanValue(evaluateConstraint(from, "x"));
