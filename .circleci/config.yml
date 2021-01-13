@@ -33,17 +33,6 @@ jobs:
           name: Unit tests
           command: sbt test
       - run:
-          name: Clone CMMN-test framework
-          command: |
-            cd ..
-            git clone https://$GIT_USER:$GIT_PASS@github.com/cafienne/cmmn-test-framework.git
-      - run:
-          name: Install dependencies
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            npm install
-      - run:
           name: Docker login
           command: echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
       - run:
@@ -79,12 +68,6 @@ jobs:
           name: Docker logs of engine
           command: docker logs cafienne
       - run:
-          name: Test engine against framework
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            npm run dev
-      - run:
           name: Stop the cafienne container
           command: docker rm -f cafienne
 
@@ -97,12 +80,6 @@ jobs:
       - run:
           name: Docker logs of engine
           command: docker logs cafienne
-      - run:
-          name: Test engine against framework
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            npm run dev
       - run:
           name: Stop the containers
           command: docker rm -f cafienne cafienne-event-db cafienne-query-db
@@ -117,12 +94,6 @@ jobs:
           name: Docker logs of engine
           command: docker logs cafienne
       - run:
-          name: Test engine against framework
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            npm run dev
-      - run:
           name: Stop the containers
           command: docker rm -f cafienne sql-server
 
@@ -135,12 +106,6 @@ jobs:
       - run:
           name: Docker logs of engine
           command: docker logs cafienne
-      - run:
-          name: Test engine against framework
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            npm run dev
       - run:
           name: Docker logs of engine
           command: docker logs cafienne
@@ -192,18 +157,6 @@ jobs:
           name: Unit tests
           command: sbt test
       - run:
-          name: Clone CMMN-test framework
-          command: |
-            cd ..
-            git clone https://$GIT_USER:$GIT_PASS@github.com/cafienne/cmmn-test-framework.git
-      - run:
-          name: Install dependencies
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            git checkout $CIRCLE_BRANCH || git checkout master
-            npm install
-      - run:
           name: Docker login
           command: echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
       - run:
@@ -225,12 +178,6 @@ jobs:
       - run:
           name: Docker logs of engine
           command: docker logs cafienne
-      - run:
-          name: Test engine against framework
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            npm run dev
       - run:
           name: Docker logs of engine
           command: docker logs cafienne
@@ -280,17 +227,6 @@ jobs:
           name: Unit tests
           command: sbt test
       - run:
-          name: Clone CMMN-test framework
-          command: |
-            cd ..
-            git clone https://$GIT_USER:$GIT_PASS@github.com/cafienne/cmmn-test-framework.git
-      - run:
-          name: Install dependencies
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            npm install
-      - run:
           name: Docker login
           command: echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
       - run:
@@ -325,12 +261,6 @@ jobs:
           name: Docker logs of engine
           command: docker logs cafienne
       - run:
-          name: Test engine against framework
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            npm run dev
-      - run:
           name: Stop the cafienne container
           command: docker rm -f cafienne
 
@@ -343,12 +273,6 @@ jobs:
       - run:
           name: Docker logs of engine
           command: docker logs cafienne
-      - run:
-          name: Test engine against framework
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            npm run dev
       - run:
           name: Stop the containers
           command: docker rm -f cafienne cafienne-event-db cafienne-query-db
@@ -363,12 +287,6 @@ jobs:
           name: Docker logs of engine
           command: docker logs cafienne
       - run:
-          name: Test engine against framework
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            npm run dev
-      - run:
           name: Stop the containers
           command: docker rm -f cafienne sql-server
 
@@ -381,12 +299,6 @@ jobs:
       - run:
           name: Docker logs of engine
           command: docker logs cafienne
-      - run:
-          name: Test engine against framework
-          command: |
-            cd ..
-            cd ./cmmn-test-framework
-            npm run dev
       - run:
           name: Docker logs of engine
           command: docker logs cafienne
