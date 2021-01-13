@@ -151,14 +151,14 @@ lazy val service = project("case-service")
       )
   )
   .settings(
-    packageName in Docker := "cafienne/engine",
+    packageName in Docker := "qollabor/engine",
     version in Docker := "latest",
-    maintainer in Docker := """Cafienne <info@cafienne.io>""",
+    maintainer in Docker := """Qollabor <info@qollabor.io>""",
     defaultLinuxInstallLocation in Docker := "/opt/cafienne",
     bashScriptExtraDefines += s"""addJava "-Dlogback.configurationFile=$${app_home}/../conf/logback.xml"""",
     bashScriptExtraDefines += s"""addJava "-Dconfig.file=$${app_home}/../conf/local.conf"""",
     dockerExposedPorts := Seq(2027, 9999),
-    dockerBaseImage := "cafienne/base:openjdk-11-buster",
+    dockerBaseImage := "cafienne/base:openjdk-11-buster",//TODO change base
     name in Universal := "cafienne",
     packageName in Universal := "cafienne"
   )
