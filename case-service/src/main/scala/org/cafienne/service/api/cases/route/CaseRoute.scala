@@ -71,10 +71,10 @@ class CaseRoute(val caseQueries: CaseQueries)(override implicit val userCache: I
   def getCases = get {
     pathEndOrSingleSlash {
       validUser { platformUser =>
-        parameters('tenant ?, 'identifiers ?, 'offset ? 0, 'numberOfResults ? 100, 'caseName ?, 'definition ?, 'state ?, 'sortBy ?, 'sortOrder ?) {
-          (tenant, identifiers, offset, numResults, caseName, definition, state, sortBy, sortOrder) =>
+        parameters('tenant ?, 'identifiers ?, 'offset ? 0, 'numberOfResults ? 100, 'caseName ?, 'definition ?, 'state ?, 'sortBy ?, 'sortOrder ?, 'parentCaseId ?, 'rootCaseId ?) {
+          (tenant, identifiers, offset, numResults, caseName, definition, state, sortBy, sortOrder, parentCaseId, rootCaseId) =>
             val backwardsCompatibleNameFilter: Option[String] = caseName.fold(definition)(n => Some(n))
-            val filter = CaseFilter(tenant, identifiers = identifiers, caseName = backwardsCompatibleNameFilter, status = state)
+            val filter = CaseFilter(tenant, identifiers = identifiers, caseName = backwardsCompatibleNameFilter, status = state, parentCaseId= parentCaseId, rootCaseId = rootCaseId)
             runListQuery(caseQueries.getCases(platformUser, filter, Area(offset, numResults), Sort.withDefault(sortBy, sortOrder, "lastModified")))
         }
       }

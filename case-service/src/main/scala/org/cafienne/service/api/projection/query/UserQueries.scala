@@ -38,7 +38,7 @@ class TenantQueriesImpl extends UserQueries with LazyLogging
     val query = TableQuery[UserRoleTable].filter(_.userId === userId).filter(_.enabled === true)
 
     db.run(query.result).map(records => {
-      val users = records.filter(record => record.role_name == "")
+      val users = records.filter(record => record.role_name.trim() == "")
       val tenants = users.map(user => user.tenant)
       val tenantUsers = tenants.map(tenant => {
         val user = users.find(u => u.tenant == tenant).get// no worries, this always exists (obviously, otherwise there would not be a tenant).
@@ -52,7 +52,7 @@ class TenantQueriesImpl extends UserQueries with LazyLogging
   override def getSelectedTenantUsers(tenant: String, users: Seq[String]): Future[Seq[TenantUser]] = {
     val query = TableQuery[UserRoleTable].filter(_.userId.inSet(users)).filter(_.tenant === tenant).filter(_.enabled === true)
     db.run(query.result).map(records => {
-      val users = records.filter(record => record.role_name == "")
+      val users = records.filter(record => record.role_name.trim() == "")
       users.map(user => {
         val roles = records.filter(record => record.userId == user.userId && !record.role_name.isBlank)
         createTenantUser(user, roles)

@@ -41,6 +41,7 @@ trait CaseQueries {
   def getMyCases(user: PlatformUser, filter: CaseFilter, area: Area = Area.Default, sort: Sort = Sort.NoSort): Future[Seq[CaseRecord]] = ???
 
   def getCases(user: PlatformUser, filter: CaseFilter, area: Area = Area.Default, sort: Sort = Sort.NoSort): Future[Seq[CaseRecord]] = ???
+
 }
 
 class CaseQueriesImpl
@@ -340,6 +341,8 @@ class CaseQueriesImpl
     val query = for {
       baseQuery <- statusFilter(filter.status)
           .filterOpt(filter.tenant)((t, value) => t.tenant === value)
+          .filterOpt(filter.parentCaseId)((t, value) => t.parentCaseId === value)
+          .filterOpt(filter.rootCaseId)((t, value) => t.rootCaseId === value)
           .filterOpt(filter.caseName)((t, value) => t.caseName.toLowerCase like s"%${value.toLowerCase}%")
 
       // Validate team membership
@@ -350,6 +353,7 @@ class CaseQueriesImpl
       records
     })
   }
+
 
   def statusFilter(status: Option[String]) = {
     // Depending on the value of the "status" filter, we have 3 different filters.
