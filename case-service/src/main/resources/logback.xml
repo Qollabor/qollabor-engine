@@ -7,9 +7,9 @@
     <logger name="akka.cluster.ClusterHeartbeatSender"    level="WARN" />
     <logger name="akka.cluster.ClusterCoreDaemon" level="WARN" />
     <logger name="akka.serialization" level="WARN" />
-    <logger name="org.cafienne"    level="WARN" />
-<!--        <logger name="org.cafienne.cmmn"    level="DEBUG" />-->
-<!--        <logger name="org.cafienne.service"    level="DEBUG" />-->
+    <logger name="org.qollabor" level="WARN" />
+<!--        <logger name="org.qollabor.cmmn"    level="DEBUG" />-->
+<!--        <logger name="org.qollabor.service"    level="DEBUG" />-->
     <logger name="com.datastax" level="WARN"/>
     <logger name="com.wordnik" level="ERROR"/>
     <logger name="com.gettyimages" level="ERROR"/>

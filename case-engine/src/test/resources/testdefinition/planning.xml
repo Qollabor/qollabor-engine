@@ -41,7 +41,7 @@
                 <applicabilityRule id="rule_csQA1_1" name="isValid">
                     <condition language="spel">
                         <body>
-                            <![CDATA[discretionaryItem.name=="Opnieuw T1" || (stage.planItems.?[name=='T2'].size() > 0 && stage.planItems.?[name=='T2'][0].state == T(org.cafienne.cmmn.instance.State).Active)]]>
+                            <![CDATA[discretionaryItem.name=="Opnieuw T1" || (stage.planItems.?[name=='T2'].size() > 0 && stage.planItems.?[name=='T2'][0].state == T(org.qollabor.cmmn.instance.State).Active)]]>
                         </body>
                     </condition>
                 </applicabilityRule>
@@ -71,7 +71,7 @@
             </stage>
         </casePlanModel>
         <extensionElements mustUnderstand="false">
-            <cafienne:start-case-model xmlns:cafienne="org.cafienne">{
+            <qollabor:start-case-model xmlns:qollabor="org.qollabor">{
   "schema":{
     "title": "",
     "type": "object",
@@ -79,7 +79,7 @@
     }
   }
 }
-                                        </cafienne:start-case-model>
+                                        </qollabor:start-case-model>
         </extensionElements>
     </case>
     <caseFileItemDefinition name="root" definitionType="http://www.omg.org/spec/CMMN/DefinitionType/Unspecified" id="root.cfid">

@@ -8,5 +8,5 @@ java -Dcom.sun.management.jmxremote.port=9999 \
 -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled -XX:MaxPermSize=512M \
 -Xms256m -Xmx1024m -Djava.awt.headless=true \
 -cp ../../case-service/target/scala-2.11/case-service-assembly-0.6-SNAPSHOT.jar \
-org.cafienne.service.Main
+org.qollabor.service.Main
 

@@ -19,7 +19,7 @@
             <inputs id="_kBPkc_18" name="TaskInputParameter" bindingRef="_kBPkc_0"/>
             <outputs id="_kBPkc_15" name="TaskOutputParameter" bindingRef="_kBPkc_5"/>
             <extensionElements mustUnderstand="false">
-                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="humanTaskTest.humantask">
+                <qollabor:implementation xmlns:qollabor="org.qollabor" humanTaskRef="humanTaskTest.humantask">
                     <parameterMapping id="_kBPkc_14" sourceRef="_kBPkc_18" targetRef="_67M8_Content">
                         <transformation id="_kBPkc_20" language="spel">
                             <body>
@@ -34,7 +34,7 @@
                             </body>
                         </transformation>
                     </parameterMapping>
-                </cafienne:implementation>
+                </qollabor:implementation>
             </extensionElements>
         </humanTask>
     </casePlanModel>

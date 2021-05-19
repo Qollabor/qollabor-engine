@@ -48,7 +48,7 @@
             <outputs id="outTP_cm_csTql_4_4" name="TaskName" bindingRef="cfi_csvwt_4"/>
             <outputs id="outTP_cm_csTql_4_5" name="CaseID" bindingRef="cfi_csvwt_2"/>
             <extensionElements mustUnderstand="false">
-                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="expression/spelexpressionstask.humantask">
+                <qollabor:implementation xmlns:qollabor="org.qollabor" humanTaskRef="expression/spelexpressionstask.humantask">
                     <parameterMapping id="inPM_cm_csTql_4_0" sourceRef="inTP_cm_csTql_4_3" targetRef="_f5oP_HumanTaskInput"/>
                     <parameterMapping id="outPM_cm_csTql_4_0" sourceRef="_9oOB_TaskOutput" targetRef="outTP_cm_csTql_4_3"/>
                     <parameterMapping id="outPM_cm_csTql_4_1" targetRef="outTP_cm_csTql_4_4" sourceRef="">
@@ -79,7 +79,7 @@
                             </body>
                         </condition>
                     </duedate>
-                </cafienne:implementation>
+                </qollabor:implementation>
             </extensionElements>
         </humanTask>
         <milestone id="pid_cm_csd7G_38" name="Milestone"/>
@@ -106,7 +106,7 @@ Otherwise testcase will not work.]]>
         </text>
     </textAnnotation>
     <extensionElements mustUnderstand="false">
-        <cafienne:start-case-model xmlns:cafienne="org.cafienne">{
+        <qollabor:start-case-model xmlns:qollabor="org.qollabor">{
   "schema":{
     "title": "",
     "type": "object",
@@ -114,6 +114,6 @@ Otherwise testcase will not work.]]>
     }
   }
 }
-            </cafienne:start-case-model>
+            </qollabor:start-case-model>
     </extensionElements>
 </case>

@@ -1,6 +1,6 @@
-# Cafienne Engine for CMMN 1.1
+# Qollabor Engine for CMMN 1.1
 
-Cafienne hosts an open source Case Management Engine which natively executes the CMMN 1.1 standard.
+Qollabor hosts an open source Case Management Engine which natively executes the CMMN 1.1 standard.
 The engine is written in Java and Scala co-operated with the Akka toolkit, backed by Cassandra and Postgres.
 This technical foundation makes it a platform for building highly concurrent,
 distributed, and resilient message-driven case management applications.
@@ -10,11 +10,11 @@ distributed, and resilient message-driven case management applications.
 The suite comprises several components, namely;
 
 1. A multi-tenant service hosting among others a CMMN interpreter
-2. The Cafienne IDE, for creating models that are interpreted by the engine
+2. The Qollabor IDE, for creating models that are interpreted by the engine
 2. A basic User Interface that can help in running and debugging models
 
 In this readme we limit to the installation of a working case engine.
-After you installed the case engine we advise you to follow the [Getting Started wiki](https://github.com/cafienne/cafienne-engine/wiki/Getting-Started).
+After you installed the case engine we advise you to follow the [Getting Started wiki](https://github.com/qollabor/qollabor-engine/wiki/Getting-Started).
 
 ## 1.1 Installation
 Currently we develop and work with the Case Service on Mac OS X and Windows.
@@ -37,7 +37,7 @@ After you succesfully installed Cassandra and Postgres you are ready for the Cas
 1. If you want to run Case Service from IntelliJ you have to checkout the sources directly from IntelliJ and create a new project based on these sources:
 
 ```sh
-https://github.com/cafienne/cafienne-engine.git
+https://github.com/qollabor/qollabor-engine.git
 ```
 
 2. In the Run Configuration change the VM options to:
@@ -58,31 +58,31 @@ https://github.com/cafienne/cafienne-engine.git
 
 Run Main.scala:
 ```sh
-case-service/src/main/scala/org/cafienne/service/Main.scala
+case-service/src/main/scala/org/qollabor/service/Main.scala
 ```
 
 #### 1.1.2.3 Run Case Service from the console
 
 1. clone Case Service from github
 ```sh
-$ git clone https://github.com/cafienne/cafienne-engine.git
+$ git clone https://github.com/qollabor/qollabor-engine.git
 ```
 
 2. Build the Case Service sources (this will generate a zip containing the engine)
 ```sh
-$ cd ./cafienne
+$ cd ./qollabor
 $ sbt universal:packageBin
 ```
 
 3. Copy and unpack the generated zip
 ``` sh
-$ cp case-service/target/universal/cafienne.zip ~
-$ cd ~ && unzip ~/cafienne.zip
+$ cp case-service/target/universal/qollabor.zip ~
+$ cd ~ && unzip ~/qollabor.zip
 ```
 
 4. Run the Case Service:
 ```sh
-$ cd ~/cafienne/bin
+$ cd ~/qollabor/bin
 $ ./case-service (or case-service.bat on Windows)
 ```
 
@@ -99,11 +99,11 @@ locally on the host. Add 10000 to the default ports
 
 1. To build the Case Service docker image run
 ``` sh
-$ cd ./cafienne
+$ cd ./qollabor
 $ sbt docker:publishLocal
 ```
 
-##### Use the docker hub version to run cafienne. 
+##### Use the docker hub version to run qollabor. 
 
 By default the docker hub version is pre-packed with a configuration that makes use of a number of environment 
 variables in order to specify the projections database, the event database and the OpenID connect IDP used. 
@@ -115,7 +115,7 @@ have different setups as supported by slick and the akka-persistence drivers.
  
 PROJECTION_DB_URL
 
- * "jdbc:postgresql://localhost:5432/cafienne-query?reWriteBatchedInserts=true"
+ * "jdbc:postgresql://localhost:5432/qollabor-query?reWriteBatchedInserts=true"
  
  
 PROJECTION_DB_USER
@@ -124,7 +124,7 @@ PROJECTION_DB_PASSWORD
 
 EVENT_DB_URL
 
- * "jdbc:postgresql://localhost:5432/cafienne-eventstore?reWriteBatchedInserts=true"
+ * "jdbc:postgresql://localhost:5432/qollabor-eventstore?reWriteBatchedInserts=true"
  
  
 EVENT_DB_USER
@@ -136,39 +136,39 @@ CLUSTER_SEED_NODES
 
 This is a list and is specified like CLUSTER_SEED_NODES.0=akka://ClusterSystem@192.168.1.55:25520 
 
-CAFIENNE_PLATFORM_OWNERS
+QOLLABOR_PLATFORM_OWNERS
 
-This is a list and is specified like CAFIENNE_PLATFORM_OWNERS.0=admin
+This is a list and is specified like QOLLABOR_PLATFORM_OWNERS.0=admin
 
-CAFIENNE_PLATFORM_DEFAULT_TENANT
+QOLLABOR_PLATFORM_DEFAULT_TENANT
  
-CAFIENNE_OIDC_CONNECT_URL
+QOLLABOR_OIDC_CONNECT_URL
 
-CAFIENNE_OIDC_TOKEN_URL
+QOLLABOR_OIDC_TOKEN_URL
 
-CAFIENNE_OIDC_KEY_URL
+QOLLABOR_OIDC_KEY_URL
 
-CAFIENNE_OIDC_AUTHORIZATION_URL
+QOLLABOR_OIDC_AUTHORIZATION_URL
 
-CAFIENNE_OIDC_ISSUER
+QOLLABOR_OIDC_ISSUER
 
-CAFIENNE_CMMN_DEFINITIONS_PATH
+QOLLABOR_CMMN_DEFINITIONS_PATH
 
-CAFIENNE_DEBUG_EVENTS
+QOLLABOR_DEBUG_EVENTS
 
 ###### Use of a custom configuration
 
 1. Create data folders for the external data
 ``` sh
-$ mkdir ~/docker-data/cafienne
-$ mkdir ~/docker-data/cafienne/conf
-$ mkdir ~/docker-data/cafienne/definitions
-$ mkdir ~/docker-data/cafienne/definitions/logs
+$ mkdir ~/docker-data/qollabor
+$ mkdir ~/docker-data/qollabor/conf
+$ mkdir ~/docker-data/qollabor/definitions
+$ mkdir ~/docker-data/qollabor/definitions/logs
 ```
 
-2. Copy the  `cafienne.conf.docker` file to the `~/docker-data/cafienne/conf` folder
+2. Copy the  `qollabor.conf.docker` file to the `~/docker-data/qollabor/conf` folder
 ``` sh
-$ cp ./cafienne/run/case-service/cafienne.conf.docker ~/docker-data/cafienne/conf/local.conf
+$ cp ./qollabor/run/case-service/qollabor.conf.docker ~/docker-data/qollabor/conf/local.conf
 ```
 
 4. Press `ctrl-C` to shutdown the containers
@@ -187,7 +187,7 @@ This project uses the [C4 process](https://rfc.zeromq.org/spec:42/C4/) for all c
 
 ## 1.4 Getting started
 After you installed the Case Service you are ready to start building and running your first demo CMMN Case Model.
-You can read the [Getting Started wiki](https://github.com/cafienne/cafienne-engine/wiki/Getting-Started) to learn how to use the Case Service.
+You can read the [Getting Started wiki](https://github.com/qollabor/qollabor-engine/wiki/Getting-Started) to learn how to use the Case Service.
 
 ## 1.5 License
 
@@ -197,4 +197,4 @@ All the documentation is covered by the CC0 license *(do whatever you want with 
 
 [![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
 
-To the extent possible under law, [Cafienne B.V.](http://cafienne.io) has waived all copyright and related or neighboring rights to this work.
+To the extent possible under law, [Qollabor B.V.](http://qollabor.io) has waived all copyright and related or neighboring rights to this work.

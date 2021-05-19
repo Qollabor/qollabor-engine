@@ -34,13 +34,13 @@
                 <inputs id="_AqPiG_12" name="Input"/>
                 <outputs id="_AqPiG_14" name="Result" bindingRef="_AqPiG_2"/>
                 <extensionElements mustUnderstand="false">
-                    <cafienne:implementation xmlns:cafienne="org.cafienne" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition" name="simplehumantask" description="" humanTaskRef="task/simplehumantask.humantask">
+                    <qollabor:implementation xmlns:qollabor="org.qollabor" class="org.qollabor.cmmn.definition.task.WorkflowTaskDefinition" name="simplehumantask" description="" humanTaskRef="task/simplehumantask.humantask">
                         <input id="_Hun3_Input" name="Input"/>
                         <output id="_SkQG_Result" name="Result"/>
                         <task-model/>
                         <parameterMapping id="_AqPiG_13" sourceRef="_AqPiG_12" targetRef="_Hun3_Input"/>
                         <parameterMapping id="_AqPiG_15" sourceRef="_SkQG_Result" targetRef="_AqPiG_14"/>
-                    </cafienne:implementation>
+                    </qollabor:implementation>
                 </extensionElements>
             </humanTask>
             <humanTask id="ht__AqPiG_1" name="HumanTask_0" isBlocking="true"/>

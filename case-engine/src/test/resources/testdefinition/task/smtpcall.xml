@@ -101,9 +101,9 @@
 		<input id="attachment" name="attachment" />
 		<input id="filename" name="filename" />
 		<extensionElements>
-			<cafienne:implementation
-				class="org.cafienne.processtask.implementation.smtp.SMTPCallDefinition"
-				xmlns:cafienne="org.cafienne">
+			<qollabor:implementation
+				class="org.qollabor.processtask.implementation.smtp.SMTPCallDefinition"
+				xmlns:qollabor="org.qollabor">
 				<smtp-server>localhost</smtp-server>
 				<smtp-port>25</smtp-port>
 				<subject>${subject}</subject>
@@ -123,7 +123,7 @@
 				<attachments>
 					<attachment name="${filename}">${attachment}</attachment>
 				</attachments>
-			</cafienne:implementation>
+			</qollabor:implementation>
 		</extensionElements>
 	</process>
 	<CMMNDI>
