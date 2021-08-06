@@ -44,7 +44,7 @@
     </casePlanModel>
     <input id="csAQm_inCPs_0" name="inputCaseFile" bindingRef="cfi_csGlQ_0"/>
     <extensionElements mustUnderstand="false">
-        <cafienne:start-case-model xmlns:cafienne="org.cafienne">{
+        <qollabor:start-case-model xmlns:qollabor="org.qollabor">{
   "schema":{
     "title": "",
     "type": "object",
@@ -52,6 +52,6 @@
     }
   }
 }
-                    </cafienne:start-case-model>
+                    </qollabor:start-case-model>
     </extensionElements>
 </case>

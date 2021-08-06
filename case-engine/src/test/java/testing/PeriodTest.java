@@ -1,5 +1,5 @@
 /* 
- * Copyright 2014 - 2019 Cafienne B.V.
+ * Copyright 2014 - 2019 Qollabor B.V.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -11,7 +11,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.Period;
 
-import org.cafienne.cmmn.test.TestScript;
+import org.qollabor.cmmn.test.TestScript;
 
 public class PeriodTest {
 

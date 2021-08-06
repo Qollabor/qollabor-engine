@@ -12,8 +12,8 @@
             <humanTask id="pid_cm_expression/valueowner.case_166" name="TaskWithExpression" isBlocking="true">
                 <inputs id="_E9IZ1" name="inputContainer" bindingRef="cfi_expression/valueowner.case_0"/>
                 <outputs id="_iWNoI" name="Result"/>
-                <extensionElements mustUnderstand="false" xmlns:cafienne="org.cafienne">
-                    <cafienne:implementation xmlns:cafienne="org.cafienne" name="simplehumantask" description="" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition" humanTaskRef="task/simplehumantask.humantask">
+                <extensionElements mustUnderstand="false" xmlns:qollabor="org.qollabor">
+                    <qollabor:implementation xmlns:qollabor="org.qollabor" name="simplehumantask" description="" class="org.qollabor.cmmn.definition.task.WorkflowTaskDefinition" humanTaskRef="task/simplehumantask.humantask">
                         <output id="_SkQG_Result" name="Result"/>
                         <input id="_bpa7_Assignee" name="Assignee"/>
                         <input id="_Hun3_Input" name="Input"/>
@@ -33,20 +33,20 @@
                             </transformation>
                         </parameterMapping>
                         <parameterMapping id="_7tWc3" sourceRef="_SkQG_Result" targetRef="_iWNoI"/>
-                    </cafienne:implementation>
+                    </qollabor:implementation>
                 </extensionElements>
             </humanTask>
         </casePlanModel>
         <input id="_quBMy_inCPs_0" name="Container" bindingRef="cfi_expression/valueowner.case_0"/>
         <extensionElements>
-            <cafienne:start-case-model xmlns:cafienne="org.cafienne">{
+            <qollabor:start-case-model xmlns:qollabor="org.qollabor">{
   "schema":{
     "title": "",
     "type": "object",
     "properties":{
     }
   }
-}</cafienne:start-case-model>
+}</qollabor:start-case-model>
         </extensionElements>
     </case>
     <caseFileItemDefinition name="arraycontainer" definitionType="http://www.omg.org/spec/CMMN/DefinitionType/Unspecified" id="arraycontainer.cfid"/>

@@ -4,7 +4,7 @@ lazy val basicSettings = {
 
 
   Seq(
-    organization := "org.cafienne",
+    organization := "org.qollabor",
     description := "Case Engine",
     scalaVersion := Deps.V.scala,
     resolvers ++= Deps.depsRepos,
@@ -38,7 +38,7 @@ lazy val moduleSettings = basicSettings ++ Seq(
 )
 
 // PROJECT ROOT
-lazy val cafienne = Project("cafienne-engine", file(""))
+lazy val qollabor = Project("qollabor-engine", file(""))
   .aggregate(
     engine,
     service
@@ -107,7 +107,7 @@ lazy val engine = project("case-engine")
     sbtbuildinfo.BuildInfoKeys.buildInfoOptions += BuildInfoOption.BuildTime,
     sbtbuildinfo.BuildInfoKeys.buildInfoOptions += BuildInfoOption.ToMap,
     sbtbuildinfo.BuildInfoKeys.buildInfoOptions += BuildInfoOption.ToJson,
-    sbtbuildinfo.BuildInfoKeys.buildInfoPackage := "org.cafienne.cmmn.akka",
+    sbtbuildinfo.BuildInfoKeys.buildInfoPackage := "org.qollabor.cmmn.akka",
     sbtbuildinfo.BuildInfoKeys.buildInfoObject := "BuildInfo"
   )
   .enablePlugins(BuildInfoPlugin)
@@ -154,13 +154,13 @@ lazy val service = project("case-service")
     packageName in Docker := "qollabor/engine",
     version in Docker := "latest",
     maintainer in Docker := """Qollabor <info@qollabor.io>""",
-    defaultLinuxInstallLocation in Docker := "/opt/cafienne",
+    defaultLinuxInstallLocation in Docker := "/opt/qollabor",
     bashScriptExtraDefines += s"""addJava "-Dlogback.configurationFile=$${app_home}/../conf/logback.xml"""",
     bashScriptExtraDefines += s"""addJava "-Dconfig.file=$${app_home}/../conf/local.conf"""",
     dockerExposedPorts := Seq(2027, 9999),
-    dockerBaseImage := "cafienne/base:openjdk-11-buster",//TODO change base
-    name in Universal := "cafienne",
-    packageName in Universal := "cafienne"
+    dockerBaseImage := "qollabor/base:openjdk-11-buster",//TODO change base
+    name in Universal := "qollabor",
+    packageName in Universal := "qollabor"
   )
   .enablePlugins(JavaAppPackaging)
   .enablePlugins(UniversalPlugin)

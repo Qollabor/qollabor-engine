@@ -17,7 +17,7 @@
             <inputs id="_E9IZ1" name="inputContainer" bindingRef="cfi_expression/valueowner.case_0"/>
             <outputs id="_iWNoI" name="Result"/>
             <extensionElements mustUnderstand="false">
-                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="task/simplehumantask.humantask">
+                <qollabor:implementation xmlns:qollabor="org.qollabor" humanTaskRef="task/simplehumantask.humantask">
                     <parameterMapping id="_mMaHf" sourceRef="_E9IZ1" targetRef="_Hun3_Input">
                         <transformation language="spel">
                             <body>
@@ -33,19 +33,19 @@
                         </transformation>
                     </parameterMapping>
                     <parameterMapping id="_7tWc3" sourceRef="_SkQG_Result" targetRef="_iWNoI"/>
-                </cafienne:implementation>
+                </qollabor:implementation>
             </extensionElements>
         </humanTask>
     </casePlanModel>
     <input id="_quBMy_inCPs_0" name="Container" bindingRef="cfi_expression/valueowner.case_0"/>
     <extensionElements mustUnderstand="false">
-        <cafienne:start-case-model xmlns:cafienne="org.cafienne">{
+        <qollabor:start-case-model xmlns:qollabor="org.qollabor">{
   "schema":{
     "title": "",
     "type": "object",
     "properties":{
     }
   }
-}</cafienne:start-case-model>
+}</qollabor:start-case-model>
     </extensionElements>
 </case>

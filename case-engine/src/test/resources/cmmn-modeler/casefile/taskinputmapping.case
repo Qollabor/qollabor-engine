@@ -44,7 +44,7 @@
         <humanTask id="pid_cm_casefile/testcontext.case_141" name="Task.AddChild" isBlocking="true">
             <outputs id="_3X9aF" name="Child" bindingRef="cfi_casefile/testcontext.case_4"/>
             <extensionElements mustUnderstand="false">
-                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="task/simplehumantask.humantask">
+                <qollabor:implementation xmlns:qollabor="org.qollabor" humanTaskRef="task/simplehumantask.humantask">
                     <parameterMapping id="_kHJ0j" sourceRef="_SkQG_Result" targetRef="_3X9aF"/>
                     <assignment id="_ilffQ_7">
                         <condition id="_ilffQ_8" language="spel">
@@ -53,14 +53,14 @@
                             </body>
                         </condition>
                     </assignment>
-                </cafienne:implementation>
+                </qollabor:implementation>
             </extensionElements>
         </humanTask>
         <humanTask id="pid_cm_casefile/testcontext.case_144" name="TaskWithContainer" isBlocking="true">
             <inputs id="_v9FEK" name="inputChildren" bindingRef="cfi_casefile/testcontext.case_3"/>
             <outputs id="_NXDUT" name="Result"/>
             <extensionElements mustUnderstand="false">
-                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="task/simplehumantask.humantask">
+                <qollabor:implementation xmlns:qollabor="org.qollabor" humanTaskRef="task/simplehumantask.humantask">
                     <parameterMapping id="_W00cE" sourceRef="_v9FEK" targetRef="_Hun3_Input">
                         <transformation language="spel">
                             <body>
@@ -69,17 +69,17 @@
                         </transformation>
                     </parameterMapping>
                     <parameterMapping id="_RkBj2" sourceRef="_SkQG_Result" targetRef="_NXDUT"/>
-                </cafienne:implementation>
+                </qollabor:implementation>
             </extensionElements>
         </humanTask>
         <humanTask id="pid_cm_casefile/testcontext.case_148" name="TaskWithChild" isBlocking="true">
             <inputs id="_axaLd" name="inputChild" bindingRef="cfi_casefile/testcontext.case_4"/>
             <outputs id="_dDqEH" name="Result"/>
             <extensionElements mustUnderstand="false">
-                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="task/simplehumantask.humantask">
+                <qollabor:implementation xmlns:qollabor="org.qollabor" humanTaskRef="task/simplehumantask.humantask">
                     <parameterMapping id="_B4VdN" sourceRef="_axaLd" targetRef="_Hun3_Input"/>
                     <parameterMapping id="_RMhmR" sourceRef="_SkQG_Result" targetRef="_dDqEH"/>
-                </cafienne:implementation>
+                </qollabor:implementation>
             </extensionElements>
         </humanTask>
         <userEvent id="pid_cm_casefile/testcontext.case_143" name="Trigger.TaskWithContainer"/>
@@ -87,13 +87,13 @@
     </casePlanModel>
     <input id="_dJPax_inCPs_0" name="Container" bindingRef="cfi_casefile/testcontext.case_3"/>
     <extensionElements mustUnderstand="false">
-        <cafienne:start-case-model xmlns:cafienne="org.cafienne">{
+        <qollabor:start-case-model xmlns:qollabor="org.qollabor">{
   "schema":{
     "title": "",
     "type": "object",
     "properties":{
     }
   }
-}</cafienne:start-case-model>
+}</qollabor:start-case-model>
     </extensionElements>
 </case>

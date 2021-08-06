@@ -4,7 +4,7 @@ services:
   sql-server:
     image: batav/circle-ci:sqlserver
     labels:
-      component: cafienne-sql-server
+      component: qollabor-sql-server
     network_mode: host
     expose:
       - 1433
@@ -15,10 +15,10 @@ services:
     environment:
       SA_PASSWORD: Abc_123456
       ACCEPT_EULA: Y
-      QUERY_DB: cafienneQuery
-      EVENT_DB: cafienneEventstore
+      QUERY_DB: qollaborQuery
+      EVENT_DB: qollaborEventstore
 
-  cafienne-event-db:
+  qollabor-event-db:
     image: postgres:12.1-alpine
     networks:
       - dev
@@ -26,14 +26,14 @@ services:
       - 5432
     ports:
       - "5431:5432"
-    hostname: cafienne-event-db
-    container_name: cafienne-event-db
+    hostname: qollabor-event-db
+    container_name: qollabor-event-db
     environment:
       POSTGRES_USER: postgresuser
       POSTGRES_PASSWORD: mysecret
-      POSTGRES_DB: cafienne-eventstore
+      POSTGRES_DB: qollabor-eventstore
 
-  cafienne-query-db:
+  qollabor-query-db:
     image: postgres:12.1-alpine
     networks:
       - dev
@@ -41,101 +41,101 @@ services:
       - 5432
     ports:
       - "5430:5432"
-    hostname: cafienne-query-db
-    container_name: cafienne-query-db
+    hostname: qollabor-query-db
+    container_name: qollabor-query-db
     environment:
       POSTGRES_USER: postgresuser
       POSTGRES_PASSWORD: mysecret
-      POSTGRES_DB: cafienne-query
+      POSTGRES_DB: qollabor-query
 
-  cafienne-test-token-service:
+  qollabor-test-token-service:
     image: spectare/oidc-token-test-service:latest
     labels:
-      component: idp-test-service-for-cafienne
+      component: idp-test-service-for-qollabor
     network_mode: host
     expose:
       - 2377
     ports:
       - "2377:2377"
-    hostname: cafienne-test-token-service
-    container_name: cafienne-test-token-service
+    hostname: qollabor-test-token-service
+    container_name: qollabor-test-token-service
     environment:
       BIND: 0.0.0.0
       PORT: 2377
 
-  cafienne-sqlserver:
-    image: cafienne/engine:latest
+  qollabor-sqlserver:
+    image: qollabor/engine:latest
     labels:
-      component: cafienne-engine
+      component: qollabor-engine
     network_mode: host
     expose:
       - 2027
     ports:
       - "2027:2027"
-    hostname: cafienne-sqlserver
-    container_name: cafienne
+    hostname: qollabor-sqlserver
+    container_name: qollabor
     restart: on-failure
     environment:
       EVENT_DB_PROFILE: ${EVENT_DB_PROFILE:-slick.jdbc.SQLServerProfile$}
       EVENT_DB_DRIVER: ${EVENT_DB_DRIVER:-com.microsoft.sqlserver.jdbc.SQLServerDriver}
       EVENT_DB_USER: ${EVENT_DB_USER:-SA}
       EVENT_DB_PASSWORD: ${EVENT_DB_PASSWORD:-Abc_123456}
-      EVENT_DB_URL: ${EVENT_DB_URL:-jdbc:sqlserver://localhost:1433;DatabaseName=cafienneEventstore;}
+      EVENT_DB_URL: ${EVENT_DB_URL:-jdbc:sqlserver://localhost:1433;DatabaseName=qollaborEventstore;}
       PROJECTION_DB_PROFILE: ${PROJECTION_DB_PROFILE:-slick.jdbc.SQLServerProfile$}
       PROJECTION_DB_DRIVER: ${PROJECTION_DB_DRIVER:-com.microsoft.sqlserver.jdbc.SQLServerDriver}
       PROJECTION_DB_USER: ${PROJECTION_DB_USER:-SA}
       PROJECTION_DB_PASSWORD: ${PROJECTION_DB_PASSWORD:-Abc_123456}
-      PROJECTION_DB_URL: ${PROJECTION_DB_URL:-jdbc:sqlserver://localhost:1433;DatabaseName=cafienneQuery;}
+      PROJECTION_DB_URL: ${PROJECTION_DB_URL:-jdbc:sqlserver://localhost:1433;DatabaseName=qollaborQuery;}
     healthcheck:
       test: ["CMD", "wget", "-s", "http://localhost:2027/api-docs/swagger.json"]
       interval: 30s
       timeout: 10s
       retries: 5
     volumes:
-      - /home/circleci/cafienne-engine/.circleci/run/cafienne/journal:/opt/cafienne/journal
-      - /home/circleci/cafienne-engine/.circleci/target/definitions:/opt/cafienne/definitions
-      - /home/circleci/cafienne-engine/.circleci/src/jdbc-conf:/opt/cafienne/conf
-      - /home/circleci/cafienne-engine/.circleci/src/bootstrap:/opt/cafienne/bootstrap
+      - /home/circleci/qollabor-engine/.circleci/run/qollabor/journal:/opt/qollabor/journal
+      - /home/circleci/qollabor-engine/.circleci/target/definitions:/opt/qollabor/definitions
+      - /home/circleci/qollabor-engine/.circleci/src/jdbc-conf:/opt/qollabor/conf
+      - /home/circleci/qollabor-engine/.circleci/src/bootstrap:/opt/qollabor/bootstrap
     depends_on:
       - sql-server
-      - cafienne-test-token-service
+      - qollabor-test-token-service
 
-  cafienne-postgres:
-    image: cafienne/engine:latest
+  qollabor-postgres:
+    image: qollabor/engine:latest
     labels:
-      component: cafienne-engine
+      component: qollabor-engine
     network_mode: host
     expose:
       - 2027
     ports:
       - "2027:2027"
-    hostname: cafienne-postgres
-    container_name: cafienne
+    hostname: qollabor-postgres
+    container_name: qollabor
     environment:
       EVENT_DB_PROFILE: ${EVENT_DB_PROFILE:-slick.jdbc.PostgresProfile$}
       EVENT_DB_DRIVER: ${EVENT_DB_DRIVER:-org.postgresql.Driver}
       EVENT_DB_USER: ${EVENT_DB_USER:-postgresuser}
       EVENT_DB_PASSWORD: ${EVENT_DB_PASSWORD:-mysecret}
-      EVENT_DB_URL: ${EVENT_DB_URL:-jdbc:postgresql://localhost:5431/cafienne-eventstore?reWriteBatchedInserts=true}
+      EVENT_DB_URL: ${EVENT_DB_URL:-jdbc:postgresql://localhost:5431/qollabor-eventstore?reWriteBatchedInserts=true}
       PROJECTION_DB_PROFILE: ${PROJECTION_DB_PROFILE:-slick.jdbc.PostgresProfile$}
       PROJECTION_DB_DRIVER: ${PROJECTION_DB_DRIVER:-org.postgresql.Driver}
       PROJECTION_DB_USER: ${PROJECTION_DB_USER:-postgresuser}
       PROJECTION_DB_PASSWORD: ${PROJECTION_DB_PASSWORD:-mysecret}
-      PROJECTION_DB_URL: ${PROJECTION_DB_URL:-jdbc:postgresql://localhost:5430/cafienne-query?reWriteBatchedInserts=true}
+      PROJECTION_DB_URL: ${PROJECTION_DB_URL:-jdbc:postgresql://localhost:5430/qollabor-query?reWriteBatchedInserts=true}
     healthcheck:
       test: ["CMD", "wget", "-s", "http://localhost:2027/api-docs/swagger.json"]
       interval: 30s
       timeout: 10s
       retries: 5
     volumes:
-      - /home/circleci/cafienne-engine/.circleci/run/cafienne/journal:/opt/cafienne/journal
-      - /home/circleci/cafienne-engine/.circleci/target/definitions:/opt/cafienne/definitions
-      - /home/circleci/cafienne-engine/.circleci/src/jdbc-conf:/opt/cafienne/conf
-      - /home/circleci/cafienne-engine/.circleci/src/bootstrap:/opt/cafienne/bootstrap
+      - /home/circleci/qollabor-engine/.circleci/run/qollabor/journal:/opt/qollabor/journal
+      - /home/circleci/qollabor-engine/.circleci/target/definitions:/opt/qollabor/definitions
+      - /home/circleci/qollabor-engine/.circleci/src/jdbc-conf:/opt/qollabor/conf
+      - /home/circleci/qollabor-engine/.circleci/src/bootstrap:/opt/qollabor/bootstrap
     depends_on:
-      - cafienne-event-db
-      - cafienne-query-db
-      - cafienne-test-token-service
+      - qollabor-event-db
+      - qollabor-query-db
+      - qollabor-test-token-service
 
 networks:
   dev:

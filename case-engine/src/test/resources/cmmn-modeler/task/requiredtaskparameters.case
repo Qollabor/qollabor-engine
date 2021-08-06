@@ -10,11 +10,11 @@
         <humanTask id="pid_cm_cssni_41" name="TaskRequiredOutput" isBlocking="true">
             <outputs id="_6xePv" name="Result">
                 <extensionElements mustUnderstand="false">
-                    <cafienne:implementation xmlns:cafienne="org.cafienne" required="true"/>
+                    <qollabor:implementation xmlns:qollabor="org.qollabor" required="true"/>
                 </extensionElements>
             </outputs>
             <extensionElements mustUnderstand="false">
-                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="task/simplehumantask.humantask">
+                <qollabor:implementation xmlns:qollabor="org.qollabor" humanTaskRef="task/simplehumantask.humantask">
                     <parameterMapping id="_6oZPT" sourceRef="_SkQG_Result" targetRef="_6xePv"/>
                     <assignment id="_p5SZA_22">
                         <condition id="_p5SZA_23" language="spel">
@@ -23,17 +23,17 @@
                             </body>
                         </condition>
                     </assignment>
-                </cafienne:implementation>
+                </qollabor:implementation>
             </extensionElements>
         </humanTask>
         <humanTask id="pid_cm_csNY8_47" name="TaskRequiredOutputWithBinding" isBlocking="true">
             <outputs id="_epnJX" name="Result" bindingRef="cfi_csNY8_0">
                 <extensionElements mustUnderstand="false">
-                    <cafienne:implementation xmlns:cafienne="org.cafienne" required="true"/>
+                    <qollabor:implementation xmlns:qollabor="org.qollabor" required="true"/>
                 </extensionElements>
             </outputs>
             <extensionElements mustUnderstand="false">
-                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="task/simplehumantask.humantask">
+                <qollabor:implementation xmlns:qollabor="org.qollabor" humanTaskRef="task/simplehumantask.humantask">
                     <parameterMapping id="_9RcDI" sourceRef="_SkQG_Result" targetRef="_epnJX"/>
                     <assignment id="_p5SZA_20">
                         <condition id="_p5SZA_21" language="spel">
@@ -42,13 +42,13 @@
                             </body>
                         </condition>
                     </assignment>
-                </cafienne:implementation>
+                </qollabor:implementation>
             </extensionElements>
         </humanTask>
         <humanTask id="pid_cm_csNY8_49" name="TaskWithOutputNotRequired" isBlocking="true">
             <outputs id="_VsVwA" name="Result"/>
             <extensionElements mustUnderstand="false">
-                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="task/simplehumantask.humantask">
+                <qollabor:implementation xmlns:qollabor="org.qollabor" humanTaskRef="task/simplehumantask.humantask">
                     <parameterMapping id="_bW3g9" sourceRef="_SkQG_Result" targetRef="_VsVwA"/>
                     <assignment id="_p5SZA_18">
                         <condition id="_p5SZA_19" language="spel">
@@ -57,13 +57,13 @@
                             </body>
                         </condition>
                     </assignment>
-                </cafienne:implementation>
+                </qollabor:implementation>
             </extensionElements>
         </humanTask>
         <humanTask id="pid_cm_csa4I_58" name="TaskWithOutputNotRequiredAndBinding" isBlocking="true">
             <outputs id="_75v4Z" name="Result" bindingRef="cfi_csNY8_0"/>
             <extensionElements mustUnderstand="false">
-                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="task/simplehumantask.humantask">
+                <qollabor:implementation xmlns:qollabor="org.qollabor" humanTaskRef="task/simplehumantask.humantask">
                     <parameterMapping id="_1jW2A" sourceRef="_SkQG_Result" targetRef="_75v4Z">
                         <transformation language="spel">
                             <body>
@@ -78,18 +78,18 @@
                             </body>
                         </condition>
                     </assignment>
-                </cafienne:implementation>
+                </qollabor:implementation>
             </extensionElements>
         </humanTask>
     </casePlanModel>
     <extensionElements mustUnderstand="false">
-        <cafienne:start-case-model xmlns:cafienne="org.cafienne">{
+        <qollabor:start-case-model xmlns:qollabor="org.qollabor">{
   "schema":{
     "title": "",
     "type": "object",
     "properties":{
     }
   }
-}</cafienne:start-case-model>
+}</qollabor:start-case-model>
     </extensionElements>
 </case>

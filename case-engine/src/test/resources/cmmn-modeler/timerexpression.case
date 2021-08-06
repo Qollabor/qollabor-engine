@@ -37,9 +37,9 @@
         <humanTask id="ht__AqPiG_2" name="simplehumantask" isBlocking="true">
             <outputs id="_AqPiG_14" name="Result" bindingRef="_AqPiG_2"/>
             <extensionElements mustUnderstand="false">
-                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="task/simplehumantask.humantask">
+                <qollabor:implementation xmlns:qollabor="org.qollabor" humanTaskRef="task/simplehumantask.humantask">
                     <parameterMapping id="_AqPiG_15" sourceRef="_SkQG_Result" targetRef="_AqPiG_14"/>
-                </cafienne:implementation>
+                </qollabor:implementation>
             </extensionElements>
         </humanTask>
         <humanTask id="ht__AqPiG_1" name="HumanTask_0" isBlocking="true"/>

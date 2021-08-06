@@ -8,14 +8,14 @@
 		<input id="orderJrXml" name="orderJrXml" />
 		<output id="pdfReportData" name="pdfReportData" />
 		<extensionElements>
-			<cafienne:implementation
-				class="org.cafienne.processtask.implementation.report.PDFReportDefinition"
-				xmlns:cafienne="org.cafienne">
+			<qollabor:implementation
+				class="org.qollabor.processtask.implementation.report.PDFReportDefinition"
+				xmlns:qollabor="org.qollabor">
 				<reportXml name="customerJrXml" />
 				<subReportXml name="orderJrXml" parameterName="ORDER_REPORT" />
 				<reportData name="customerData" />
 				<parameterMapping sourceRef="pdfReportDatas" targetRef="pdfReportData" />
-			</cafienne:implementation>
+			</qollabor:implementation>
 		</extensionElements>
 	</process>
 </definitions>
